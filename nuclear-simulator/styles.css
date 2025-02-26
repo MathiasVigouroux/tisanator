@@ -1,0 +1,421 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    image-rendering: pixelated;
+}
+
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+}
+
+body {
+    background-color: #0f0f1b;
+    color: #adffad;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+    text-shadow: 2px 2px 0px #000;
+}
+
+/* 3D Environment Styles */
+#environment-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    image-rendering: pixelated;
+}
+
+#environment {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.environment-ui {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 0;
+    border: 2px solid #55ff55;
+    pointer-events: none;
+}
+
+.location-indicator {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #55ff55;
+}
+
+#interaction-prompt {
+    color: #ffff00;
+    font-weight: bold;
+}
+
+.controls-help {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    border: 2px solid #55ff55;
+    color: #55ff55;
+    font-size: 12px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.controls-help h3 {
+    margin-bottom: 8px;
+    color: #ffff00;
+    text-align: center;
+}
+
+.controls-help ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.controls-help li {
+    margin-bottom: 5px;
+}
+
+.mission-objective {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    border: 2px solid #ff5555;
+    color: #ffaaaa;
+    font-size: 12px;
+    z-index: 10;
+    max-width: 300px;
+    pointer-events: none;
+}
+
+.mission-objective h3 {
+    margin-bottom: 8px;
+    color: #ff5555;
+}
+
+.loading-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0f0f1b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 0.5s ease-in-out;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGLAABBgAMHOA1twdQzaAAAAAElFTkSuQmCC');
+    background-repeat: repeat;
+}
+
+.loading-content {
+    text-align: center;
+    width: 80%;
+    max-width: 500px;
+}
+
+.loading-content h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #ff5555;
+    text-shadow: 3px 3px 0px #000;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #000000;
+    margin-top: 20px;
+    overflow: hidden;
+    border: 2px solid #55ff55;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: #55ff55;
+    transition: width 0.3s ease;
+}
+
+/* Game UI elements */
+.nav-button {
+    background-color: #000000;
+    color: #55ff55;
+    border: 2px solid #55ff55;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+}
+
+.nav-button:hover {
+    background-color: #55ff55;
+    color: #000000;
+}
+
+/* Simulator Container */
+#simulator-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0f0f1b;
+    overflow-y: auto;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABdJREFUeNpi2L9//38gYGJAABBgAFZfA7kkVgICAAAAAElFTkSuQmCC');
+    background-repeat: repeat;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #55ff55;
+    padding-bottom: 15px;
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat {
+    background-color: #000000;
+    padding: 8px 16px;
+    border: 2px solid #55ff55;
+    font-size: 12px;
+}
+
+.control-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.gauges {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gauge {
+    text-align: center;
+    width: 30%;
+}
+
+.gauge label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.gauge-display {
+    background-color: #000000;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #55ff55;
+}
+
+.gauge-value {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-image: linear-gradient(to top, #00ff00, #ffff00, #ff0000);
+    height: 0%;
+    transition: height 0.5s ease;
+    image-rendering: pixelated;
+}
+
+.gauge-reading {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.controls {
+    background-color: #000000;
+    padding: 20px;
+    border: 2px solid #55ff55;
+}
+
+.control-group {
+    margin-bottom: 20px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.control-group input[type="range"] {
+    width: 100%;
+    margin-bottom: 5px;
+    height: 20px;
+    -webkit-appearance: none;
+    background-color: #111111;
+    outline: none;
+    border: 2px solid #55ff55;
+    cursor: pointer;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #55ff55;
+    cursor: pointer;
+}
+
+.system-status {
+    background-color: #000000;
+    padding: 20px;
+    border: 2px solid #55ff55;
+    margin-bottom: 30px;
+}
+
+.system-status h2 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #55ff55;
+}
+
+#status-log {
+    background-color: #0f0f1b;
+    height: 150px;
+    overflow-y: auto;
+    padding: 10px;
+    font-family: monospace;
+    border: 2px solid #333355;
+    image-rendering: auto;
+}
+
+.log-entry {
+    margin-bottom: 5px;
+    font-size: 12px;
+    border-bottom: 1px solid #333355;
+    padding-bottom: 5px;
+    font-family: monospace;
+}
+
+.log-entry.warning {
+    color: #ffff00;
+}
+
+.log-entry.critical {
+    color: #ff5555;
+}
+
+.log-entry.important {
+    color: #55ffff;
+}
+
+.emergency-controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.emergency-button {
+    background-color: #800000;
+    color: white;
+    border: 2px solid #ff0000;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.emergency-button:hover {
+    background-color: #ff0000;
+}
+
+button {
+    background-color: #000000;
+    color: #55ff55;
+    border: 2px solid #55ff55;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+}
+
+button:hover {
+    background-color: #55ff55;
+    color: #000000;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+}
+
+.modal-content {
+    background-color: #000000;
+    margin: 15% auto;
+    padding: 20px;
+    width: 50%;
+    border: 2px solid #ff5555;
+    text-align: center;
+}
+
+#alert-title {
+    color: #ff5555;
+    margin-bottom: 20px;
+}
+
+#alert-ok {
+    margin-top: 20px;
+    border-color: #ff5555;
+    color: #ff5555;
+    padding: 10px 30px;
+}
+
+#alert-ok:hover {
+    background-color: #ff5555;
+    color: #000000;
+}
+
+/* Pixel cursor */
+.pixel-cursor {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALJJREFUeNpi/P//PwMlgJFSA5jggrH2onDGuiUMdTbi71hk4LYJu/wMJjQBZ7AYA9BQDiDmZGBm4AByvwDxayBeyATkPAbibUxoNkKDDySHDGYCDX0NxMxAw88C8Weo4RJAvgQ2A0BiSUDMDnUJyGZ+dD8bg+IWKLyC4pQFKklFqIZAfV7IwA0NcwGkMGeEZRaQAUxAzRxATSBMrBeamJB5ID0gDFLDgmwbEwMVAECAAQBhvw3J8qAItgAAAABJRU5ErkJggg==');
+    image-rendering: pixelated;
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+}

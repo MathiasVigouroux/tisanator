@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuclear Plant Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- 3D Environment Container -->
+    <div id="environment-container">
+        <div id="environment"></div>
+        <div class="environment-ui">
+            <div class="location-indicator">Location: <span id="current-location">Entrance</span></div>
+            <div id="interaction-prompt"></div>
+        </div>
+        <div class="loading-screen" id="loading-screen">
+            <div class="loading-content">
+                <h2>Nuclear Plant Facility</h2>
+                <p>Loading environment...</p>
+                <div class="progress-bar">
+                    <div class="progress" id="load-progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reactor Simulator Container (initially hidden) -->
+    <div id="simulator-container" style="display: none;">
+        <div class="container">
+            <header>
+                <h1>Nuclear Plant Simulator</h1>
+                <div class="stats">
+                    <div class="stat">Power Output: <span id="power-output">0</span> MW</div>
+                    <div class="stat">Safety Rating: <span id="safety-rating">100</span>%</div>
+                    <div class="stat">Time: <span id="time">00:00</span></div>
+                </div>
+                <button id="exit-simulator" class="nav-button">Exit to Facility</button>
+            </header>
+            
+            <div class="control-panel">
+                <div class="gauges">
+                    <div class="gauge">
+                        <label>Core Temperature</label>
+                        <div class="gauge-display" id="temp-gauge">
+                            <div class="gauge-value" id="temp-value"></div>
+                        </div>
+                        <div class="gauge-reading"><span id="temperature">0</span>°C</div>
+                    </div>
+                    <div class="gauge">
+                        <label>Reactor Pressure</label>
+                        <div class="gauge-display" id="pressure-gauge">
+                            <div class="gauge-value" id="pressure-value"></div>
+                        </div>
+                        <div class="gauge-reading"><span id="pressure">0</span> MPa</div>
+                    </div>
+                    <div class="gauge">
+                        <label>Radiation Level</label>
+                        <div class="gauge-display" id="radiation-gauge">
+                            <div class="gauge-value" id="radiation-value"></div>
+                        </div>
+                        <div class="gauge-reading"><span id="radiation">0</span> mSv/h</div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Control Rods</label>
+                        <input type="range" id="control-rods" min="0" max="100" value="50">
+                        <span id="control-rods-value">50%</span>
+                    </div>
+                    <div class="control-group">
+                        <label>Coolant Flow</label>
+                        <input type="range" id="coolant-flow" min="0" max="100" value="50">
+                        <span id="coolant-flow-value">50%</span>
+                    </div>
+                    <div class="control-group">
+                        <label>Turbine Speed</label>
+                        <input type="range" id="turbine-speed" min="0" max="100" value="50">
+                        <span id="turbine-speed-value">50%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="system-status">
+            <h2>System Status</h2>
+            <div id="status-log"></div>
+                <div class="log-entry">System initialized. Reactor in standby mode.</div>
+            </div>
+        </div>
+        
+        <div class="emergency-controls">
+            <button id="scram-button" class="emergency-button">SCRAM</button>
+            <button id="reset-button">Reset Simulation</button>
+        </div>
+    </div>
+    
+    <div id="alert-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="alert-title">Alert</h2>
+            <p id="alert-message"></p>
+            <button id="alert-ok">OK</button>
+        </div>
+    </div>
+    
+    <script src="reactor.js"></script>
+    <script src="environment.js"></script>
+    <script src="simulator.js"></script>
+</body>
+</html>
